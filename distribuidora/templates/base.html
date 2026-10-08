@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}Comercial Norte{% endblock %} · Distribuidora</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="{{ url_for('assets',filename='css/estilos.css') }}" rel="stylesheet">
+<script src="{{ url_for('assets',filename='js/app.js') }}" defer></script></head>
+<body><a href="#principal" class="skip">Saltar al contenido</a>
+<header><a class="brand" href="/">CN<span>Comercial Norte<small>GESTIÓN DE DISTRIBUIDORA</small></span></a><span class="demo">DEMO · Datos ficticios</span></header>
+<div class="layout"><nav aria-label="Navegación principal">
+{% for path,label in [('/','Resumen'),('/clientes','Clientes'),('/productos','Productos'),('/stock','Stock'),('/pedidos/nuevo','Nuevo pedido'),('/pedidos','Pedidos'),('/deposito','Depósito'),('/reportes','Historial')] %}
+<a href="{{ path }}" {% if request.path==path %}aria-current="page" class="active"{% endif %}>{{ label }}</a>{% endfor %}
+<p class="nav-note">Solicitado → Preparado → Entregado<br>Un registro para cada etapa.</p></nav>
+<main id="principal"><div class="page-heading"><div><p class="eyebrow">OPERACIONES / COMERCIAL NORTE</p><h1>{{ self.title() }}</h1></div>{% block action %}{% endblock %}</div>
+{% for category,message in get_flashed_messages(with_categories=true) %}<div class="alert alert-{{ category }}" role="status">{{ message }}</div>{% endfor %}
+{% block content %}{% endblock %}
+<footer>Comercial Norte · MVP académico · Guaraníes enteros · Sin reservas de stock</footer></main></div></body></html>

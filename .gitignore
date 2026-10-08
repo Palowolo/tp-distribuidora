@@ -1,0 +1,12 @@
+.venv/
+.env
+.env.*
+!.env.example
+.vercel/
+__pycache__/
+.pytest_cache/
+*.pyc
+.secrets/
+*.log
+node_modules/
+supabase/.temp/

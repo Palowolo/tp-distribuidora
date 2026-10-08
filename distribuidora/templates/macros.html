@@ -1,0 +1,9 @@
+{% macro csrf() %}<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">{% endmacro %}
+{% macro operation() %}{{ csrf() }}<input type="hidden" name="operation_key" value="{{ new_token() }}">{% endmacro %}
+{% macro field(name,label,value='',type='text',required=true,maxlength=160,min='',max='') %}
+<div class="field"><label for="{{ name }}">{{ label }}</label><input class="form-control" id="{{ name }}" name="{{ name }}" type="{{ type }}" value="{{ value }}" {% if required %}required{% endif %} maxlength="{{ maxlength }}" {% if type=='number' %}step="1" min="{{ min }}" max="{{ max }}"{% endif %}></div>
+{% endmacro %}
+{% macro badge(row) %}<span class="state">{{ row.estado }}</span>{% if row.parcial %}<span class="partial">Entrega parcial</span>{% endif %}{% endmacro %}
+{% macro orders_table(rows) %}<div class="table-responsive"><table class="table"><thead><tr><th>Pedido</th><th>Cliente</th><th>Fecha</th><th>Estado</th><th class="money">Solicitado</th><th class="money">Entregado</th><th>Acción</th></tr></thead><tbody>
+{% for p in rows %}<tr><td>#{{ p.id }}</td><td>{{ p.nombre_comercio }}</td><td>{{ p.fecha.strftime('%d/%m/%Y') }}</td><td>{{ badge(p) }}</td><td class="money">{{ p.monto_solicitado|gs }}</td><td class="money">{{ p.monto_entregado|gs }}</td><td><a href="{{ url_for('orders.view',order_id=p.id) }}">Ver pedido</a></td></tr>
+{% else %}<tr><td colspan="7" class="empty">No hay pedidos para esta consulta.</td></tr>{% endfor %}</tbody></table></div>{% endmacro %}

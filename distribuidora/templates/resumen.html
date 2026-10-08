@@ -1,0 +1,8 @@
+{% extends 'base.html' %}{% from 'macros.html' import orders_table %}{% block title %}Resumen operativo{% endblock %}
+{% block action %}<a class="btn btn-primary" href="/pedidos/nuevo">+ Nuevo pedido</a>{% endblock %}
+{% block content %}<p class="lead-note">Lo que se pidió, lo que se prepara y lo que ya se entregó.</p>
+<div class="metrics">{% for state,n in counts.items() %}<a class="metric" href="{{ url_for('orders.index',estado=state) }}"><span>{{ state }}</span><strong>{{ n }}</strong></a>{% endfor %}</div>
+<div class="two-columns"><section class="panel"><h2>Atención al inventario <span class="count">{{ low|length }}</span></h2><p>Productos por debajo del mínimo.</p>
+{% for p in low %}<div class="stock-alert"><strong>{{ p.nombre }}</strong><span>{{ p.cantidad_actual }} disponibles / mínimo {{ p.stock_minimo }}</span></div>{% else %}<p class="empty">Sin alertas de stock.</p>{% endfor %}<a href="/stock">Revisar existencias →</a></section>
+<section class="panel"><h2>Actividad comercial</h2><p class="big-number">{{ active }} <small>clientes activos</small></p><p>Los montos solicitados no representan cobros.</p><a href="/deposito">Abrir lista de preparación →</a></section></div>
+<section class="panel"><h2>Pedidos recientes</h2>{{ orders_table(rows) }}</section>{% endblock %}
